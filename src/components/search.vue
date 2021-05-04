@@ -1,6 +1,7 @@
 <template>
   <div class="search_container">
     <el-input  suffix-icon="el-icon-search" size="small" v-model="input" placeholder="搜索"></el-input>
+        <el-input  suffix-icon="el-icon-search" size="small" v-model="input" placeholder="搜索"></el-input>
   </div>
 </template>
 
