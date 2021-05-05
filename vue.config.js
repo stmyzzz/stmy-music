@@ -19,6 +19,7 @@ module.exports = {
     prependData: `
       @import "@/style/mixin.scss";
       @import "@/style/common.scss";
+      @import "@/style/element-css.scss";
     `
   },
   }

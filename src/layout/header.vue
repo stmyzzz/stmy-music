@@ -55,13 +55,17 @@ export default {
     justify-content: space-between;
     position: absolute;
     width: 100vw;
-    @include sc(2.5rem,rgb(233, 61, 61));
     height:$header-height;
     background-color: var(--header-bgcolor);
     padding-right: 30px;
-  /deep/.iconfont {
+    /deep/.iconfont {
     color: var(--header-font-color);
     }
+    @include el-input-theme(
+    var(--header-input-color),
+    var(--header-input-bgcolor),
+    var(--header-input-placeholder-color)
+    );
   .left{
     padding: 14px 14px 0 8px;
     display: flex;

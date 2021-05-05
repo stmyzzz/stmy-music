@@ -1,5 +1,6 @@
 
 <script>
+/* import {toRem} from '@/utils' */
 export default {
   name:'Icon',
   props:{
@@ -45,11 +46,11 @@ export default {
       />
     )
         if (this.backdrop) {
-      const backDropSizeRatio = 1.56
-      const backDropSize = backDropSizeRatio * this.size
+/*       const backDropSizeRatio = 1.56
+      const backDropSize = toRem(backDropSizeRatio * this.size) */
       return (
         <span
-          style={{width: backDropSize, height: backDropSize}}
+          style={{width: "24px", height: "24px"}}
           class="backdrop"
         >
           {Icon}
@@ -65,9 +66,10 @@ export default {
     .backdrop{
     display: inline-block;
     @include fc;
+    justify-content: center;
     border-radius: 50%;
     &:hover{
-      background: var(--round-hover-bgColor);
+      background: var(--round-hover-bgcolor);
     }
   }
   .icon-component{

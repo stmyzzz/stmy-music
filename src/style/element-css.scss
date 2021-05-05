@@ -1,0 +1,54 @@
+//input
+$input-height : 32px;
+@mixin el-input-style($color,$bg-color,$placeholder-color){
+  .el-input__inner{
+    height: $input-height !important;
+    line-height: $input-height !important;
+    background: #{$bg-color} !important;
+    border: none !important;
+    color: var(--input-color) !important;
+    &:hover{
+      border: none !important;
+    }
+  }
+  .el-input__suffix{
+    i{
+      line-height: $input-height + 1px  !important;
+      color: #{$color} !important;
+      transition: none !important;
+      cursor: pointer;
+    }
+  }
+}
+
+/* 覆盖el-input样式 */
+@mixin el-input-theme($color,$bg-color,$placeholder-color){
+  /deep/.el-input {
+    @include el-input-style($color, $bg-color, $placeholder-color);
+  }
+}
+
+.el-input {
+  @include el-input-style(
+    var(--input-color),
+    var(--input-bgcolor),
+    var(--font-color-grey-shallow)
+  );
+}
+.el-dialog{
+  background: var(--modal-bg-color) !important;
+  .el-dialog__header .el-dialog__title{
+    color: var(--font-color) !important;
+  }
+  .el-dialog__body{
+    color: var(--font-color) !important;
+  }
+  .el-dialog__headerbtn:focus .el-dialog__close,
+  .el-dialog__headerbtn:hover .el-dialog__close {
+    color: $theme-color;
+  }  
+}
+.el-button--primary {
+  background: $theme-color !important;
+  border-color: $theme-color !important;
+}
