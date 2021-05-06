@@ -9,7 +9,8 @@ module.exports = {
         'router':'@/router',
         'style':'@/style',
         'layout':'@/layout',
-        'utils':'@/utils'
+        'utils':'@/utils',
+        "base":'@/base'
       }
     }
   },

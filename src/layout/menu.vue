@@ -9,7 +9,19 @@
           <Icon :size="16" :type="item.meta.icon" class="iconfont"  />
           <span class="menu_title">{{item.meta.title}}</span>
         </router-link>
-      </ul>      
+      </ul>   
+      <div class="user_Menu" v-for="(item,index) in userMenus" :key="index"> 
+        <p>
+          <!-- <Icon :size="16" :type="item.type" /> -->
+          <span class="usermenu_header">{{item.title}}</span>
+        </p>
+        <ul class="menu_list">
+        <router-link active-class="menu_active" tag="li" v-for="(list,index) in item.children" :key="index" :to="list.path" >
+          <Icon :size="16" :type="list.meta.icon" class="iconfont"  />
+          <span class="menu_title">{{list.meta.title}}</span>
+        </router-link>
+      </ul> 
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +29,8 @@
 <script>
 import User from '@/components/user'
 import {menuRoutes} from '@/router'
+import {mapGetters} from 'vuex'
+import Icon from '../base/Icon.vue'
 export default {
   data(){
     return {
@@ -24,8 +38,12 @@ export default {
 
     }
   },
+  computed:{
+    ...mapGetters(['userMenus'])
+  },
   components:{
-    User
+    User,
+    Icon
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -56,6 +74,7 @@ export default {
           align-items: center;
           .menu_title{
             margin-left: 6px;
+            @include text-ellipsis();
           }
           color: var(--font-color);
           padding: 15px 20px;
@@ -69,6 +88,15 @@ export default {
           background: var(--menu-item-active-bg)
         }
 
+      }
+      .user_Menu{
+        p{
+          padding: 15px 20px;
+          font-size: 13px;  
+          color: var(--font-color-grey2);        
+        }
+
+        
       }
     }
   }

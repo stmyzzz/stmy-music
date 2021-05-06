@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import {mapState,mapActions} from 'vuex'
+import {mapState,mapActions,mapGetters} from 'vuex'
+import {showConfirm} from '@/base/confirm'
+import {getStore} from '@/utils'
 export default {
   data(){
     return{
@@ -33,22 +35,32 @@ export default {
       loading:false
     }
   },
+  mounted(){
+    const uid = getStore("__uid__")
+    if(uid !==''){
+      this.uid = uid
+      this.onlogin()
+    }
+  },
   computed:{
-    ...mapState(['user'])
+    ...mapState(['user','playLists']),
+    ...mapGetters(['userMenus'])
   },
   methods:{
     ...mapActions(['login']),
     async onlogin(){
+      this.loading = true
       const res = await this.login(this.uid)
+      this.loading = false
       if(res){
         console.log('res',res)
-        console.log('user',this.user)              
+        console.log('user',this.user)
+        console.log('playlist',this.playLists);
+        console.log('userMenus',this.userMenus);
       }else{
-        console.log('fail');
+        console.log('res',res)
+        showConfirm('请输入正确的id','error')
       }
-  
-      
-
     }
   }
 }
