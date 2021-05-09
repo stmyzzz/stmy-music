@@ -1,9 +1,11 @@
 <template>
   <div class="index">
     <layout-header></layout-header>
-    <div class="index-body">
-    <layout-menu></layout-menu>      
-
+    <div class="index-body">    
+      <layout-menu></layout-menu> 
+      <div class="content">
+      <router-view></router-view>        
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +29,11 @@ export default {
       display: flex;
       padding-top: $header-height;
       height: 100%;
-    }     
+    }   
+    .content{
+      flex: 1;
+      overflow-y: auto;
+    }  
   }
 
 </style>

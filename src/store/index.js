@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {getUserDetail,getUserPlaylist} from '@/api'
-import {setStore} from '@/utils'
+import {setStore,removeStore} from '@/utils'
 
 Vue.use(Vuex)
 const UID_KEY = '__uid__'
@@ -9,7 +9,10 @@ export default new Vuex.Store({
   state: {
     user:{},
     playLists:[],
-    haslogin:false
+    haslogin:false,
+    currentSong:{},
+    playstate:false,
+    playHistory:[]
   },
   mutations: {
     setUser(state,user){
@@ -17,6 +20,12 @@ export default new Vuex.Store({
     },
     setUserPlaylist(state,playlist){
       state.playLists = playlist
+    },
+    setCurrentSong(state,song){
+      state.currentSong = song
+    },
+    setPlayState(state,playstate){
+      state.playstate = playstate
     }
   },
   actions: {
@@ -36,9 +45,27 @@ export default new Vuex.Store({
       const {playlist} = playlistss.data
       commit('setUserPlaylist',playlist)
       return true
+    },
+    logout ({commit}){
+      console.log('logout');
+      commit('setUser',{})
+      commit('setUserPlaylist',{})
+      removeStore(UID_KEY)
+    },
+    async startSong({commit},song){
+      commit('setCurrentSong',song)
+      commit('setPlayState',true)
+
     }
   },
   getters:{
+    haslogin:(state)=>{
+      if(state.user.userId){
+        return true
+      }else{
+        return false
+      }
+    },
   userMenus : (state) =>{
       const {user,playLists} = state
       const setMenus = []

@@ -1,5 +1,6 @@
 import Meta from 'vue-meta'
-
+import VueLazyload from 'vue-lazyload'
+import * as utils from './index'
 export default {
   install(Vue) {
 
@@ -10,7 +11,6 @@ export default {
       /[a-z0-9]+\.(jsx?|vue)$/i,
     )
     //批量注册base组件
-    console.log('requireComponent',requireComponent)
     requireComponent.keys().forEach(fileName => {
       const componentConfig = requireComponent(fileName)
       const componentName = componentConfig.default.name
@@ -18,8 +18,8 @@ export default {
         Vue.component(componentName, componentConfig.default || componentConfig)
       }
     })
-    
-    Vue.use(Meta)
+    Vue.prototype.$utils = utils
+    Vue.use(Meta).use(VueLazyload)
 
   }
 }

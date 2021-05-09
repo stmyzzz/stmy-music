@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/layout/header.vue'
 
 const Found = () => import(/* webpackChunkName: "Found" */ '@/views/found')
 const Newmusic = () => import(/* webpackChunkName: "Newmusic" */ '@/views/newmusic')
@@ -50,9 +49,13 @@ export const menuRoutes = [
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path:'/',
+    redirect:'/Found'
+  },
+  {
+    path:'/found',
+    name:'found',
+    component:Found
   }
 ]
 

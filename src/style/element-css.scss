@@ -52,3 +52,23 @@ $input-height : 32px;
   background: $theme-color !important;
   border-color: $theme-color !important;
 }
+
+//progress
+.el-slider__button{
+  background-color: #d33a31;
+  border: none;
+}
+.el-slider__bar{
+  background:#d33a31;
+}
+.el-slider__button-wrapper{
+  @include wh(13px,13px);
+  top: -6px;
+}
+.el-slider__runway{
+  height: 4px;
+  margin: 0;
+}
+.el-slider__bar{
+  height: 4px;
+}

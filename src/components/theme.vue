@@ -58,7 +58,12 @@ export default {
         }
       }
     }
-    this.changeTheme(getStore(THEME_KEY))
+    if(getStore(THEME_KEY)){
+    this.changeTheme(getStore(THEME_KEY))      
+    }else{
+      this.changeTheme(themes.white)
+    }
+
   },
   methods:{
     changeTheme(themekey){

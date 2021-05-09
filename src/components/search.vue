@@ -52,7 +52,7 @@
 
 <script>
 import {getSearchHot,Search} from '@/api'
-import {setStore,getStore,removeStore,getArtistText} from '@/utils'
+import {setStore,getStore,removeStore,getArtists} from '@/utils'
 import {debounce} from '@/utils'
 const SEARCH_HISTORY_KEY = "search_history"
 export default {
@@ -68,13 +68,6 @@ export default {
   },
   mounted(){
     this.initData()
-    document.addEventListener('click',(e)=>{
-      let thisClassName = e.target.className
-      console.log(thisClassName);
-      if(thisClassName !== "el-input__inner"){
-        this.searchPanelShow = false
-      }
-    })
   },
   computed:{
     suggestShow(){
@@ -92,7 +85,7 @@ export default {
           icon:'music',
           data:this.suggest.songs,
           renderName(song){
-            return `${song.name} - ${getArtistText(song.artists)}`
+            return `${song.name} - ${getArtists(song.artists)}`
           },
           onClick:this.onClickSong.bind(this)
         },
@@ -162,7 +155,7 @@ export default {
       removeStore(SEARCH_HISTORY_KEY);
       this.searchHistorys = [];
     },
-        onClickPlaylist(item) {
+      onClickPlaylist(item) {
       const { id } = item
       this.$router.push(`/playlist/${id}`)
       this.searchPanelShow = false

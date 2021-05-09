@@ -1,14 +1,19 @@
 <template>
   <div class="user">
-    <div @click="dialogFormVisible = true" class="no_login">
+    <div v-if="!haslogin" @click="logindialog = true" class="no_login">
       <i class="user-icon iconfont icon-yonghu"></i>
       <p>未登录</p>
+    </div>
+
+    <div @click="onlogout()" class="no_login" v-else>
+      <img class="avatar_img" v-lazy="user.avatarUrl" src="" alt="">
+      <p>{{user.nickname}}</p>
     </div>
 
     <el-dialog
     :modal="false"
     title="登录" 
-    :visible.sync="dialogFormVisible" 
+    :visible.sync="logindialog" 
     width='30%'>
       <el-input
         class="input"
@@ -29,29 +34,29 @@ import {getStore} from '@/utils'
 export default {
   data(){
     return{
-      hasLogin:false,
-      dialogFormVisible:false,
+      logindialog:false,
       uid:null,
       loading:false
     }
   },
   mounted(){
     const uid = getStore("__uid__")
-    if(uid !==''){
+    if(uid !==null){
       this.uid = uid
       this.onlogin()
     }
   },
   computed:{
     ...mapState(['user','playLists']),
-    ...mapGetters(['userMenus'])
+    ...mapGetters(['userMenus','haslogin'])
   },
   methods:{
-    ...mapActions(['login']),
+    ...mapActions(['login','logout']),
     async onlogin(){
       this.loading = true
       const res = await this.login(this.uid)
       this.loading = false
+      this.logindialog = false
       if(res){
         console.log('res',res)
         console.log('user',this.user)
@@ -61,6 +66,12 @@ export default {
         console.log('res',res)
         showConfirm('请输入正确的id','error')
       }
+    },
+    onlogout(){
+      showConfirm('确定要退出吗',()=>{
+        console.log('logout');
+        this.logout()
+      })
     }
   }
 }
@@ -80,6 +91,11 @@ export default {
       }
       p{
         margin-left: 20px;
+      }
+      .avatar_img{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
       }
     }
     

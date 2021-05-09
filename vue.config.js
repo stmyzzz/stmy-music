@@ -10,7 +10,8 @@ module.exports = {
         'style':'@/style',
         'layout':'@/layout',
         'utils':'@/utils',
-        "base":'@/base'
+        'base':'@/base',
+        'store':'@/store'
       }
     }
   },

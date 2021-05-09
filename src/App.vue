@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <Layout/>
+    <Player/>
   </div>
 </template>
 
 <script>
 import Layout from '@/layout'
+import Player from '@/components/player'
 export default {
   name:'app',
   components:{
-    Layout
+    Layout,
+    Player
   }
 }
 </script>
