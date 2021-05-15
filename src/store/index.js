@@ -2,17 +2,18 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {getUserDetail,getUserPlaylist} from '@/api'
 import {setStore,removeStore} from '@/utils'
-
 Vue.use(Vuex)
 const UID_KEY = '__uid__'
 export default new Vuex.Store({
   state: {
-    user:{},
-    playLists:[],
-    haslogin:false,
-    currentSong:{},
-    playstate:false,
-    playHistory:[]
+    user:{}, //用户信息
+    playLists:[], /* 用户歌单列表 */
+    haslogin:false,/* 登录状态 */
+    currentSong:{},/* 当前播放的歌曲 */
+    playstate:false,/* 当前播放的状态 */
+    playHistory:[],  /* 播放列表 */
+    currentTime:0,  /* 播放的位置 */
+    MenuState:true
   },
   mutations: {
     setUser(state,user){
@@ -26,6 +27,12 @@ export default new Vuex.Store({
     },
     setPlayState(state,playstate){
       state.playstate = playstate
+    },
+    setCurrentTime(state,time){
+      state.currentTime = time
+    },
+    setMenuState(state,show){
+      state.MenuState = show
     }
   },
   actions: {
@@ -35,14 +42,14 @@ export default new Vuex.Store({
       }
       try {
         const user = await getUserDetail(uid)
-        const { profile } = user.data
+        const { profile } = user
         commit('setUser', profile)
         setStore(UID_KEY, profile.userId)
       } catch (e) {
         return error()
       }
       const playlistss = await getUserPlaylist(uid)
-      const {playlist} = playlistss.data
+      const {playlist} = playlistss
       commit('setUserPlaylist',playlist)
       return true
     },

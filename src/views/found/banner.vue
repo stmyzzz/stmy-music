@@ -19,8 +19,8 @@ export default {
   methods:{
     async initData(){
       let res = await getBanner()
-      this.banners = res.data.banners
-      console.log(res.data)
+      this.banners = res.banners
+      console.log(res)
     }
   },
   mounted(){

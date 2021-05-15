@@ -40,7 +40,7 @@
           <span style="cursor: pointer" @click="removeHistorys">清空</span>
             </p>
           <div class="tags">
-            <SEbutton v-for="(history,index) in searchHistorys" :key="index" class="button" @click="onClickhot(hot)" >
+            <SEbutton v-for="(history,index) in searchHistorys" :key="index" class="button" @click="onClickhistory(history)" >
               {{history}}
             </SEbutton> 
           </div>
@@ -52,8 +52,9 @@
 
 <script>
 import {getSearchHot,Search} from '@/api'
-import {setStore,getStore,removeStore,getArtists} from '@/utils'
+import {setStore,getStore,removeStore,getArtists,createSong} from '@/utils'
 import {debounce} from '@/utils'
+import {mapActions} from 'vuex'
 const SEARCH_HISTORY_KEY = "search_history"
 export default {
   name:'serach',
@@ -111,6 +112,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions(["startSong"]),
     initData(){
       if(getStore(SEARCH_HISTORY_KEY)){
         this.searchHistorys = JSON.parse(getStore(SEARCH_HISTORY_KEY)) 
@@ -118,21 +120,28 @@ export default {
         this.searchHistorys = []
       }
     },
+    onClickhot(hot){
+      console.log('hot',hot.first)
+      this.goSearch(hot.first)
+    },
+    onClickhistory(history){
+      console.log('hot',history)
+      this.goSearch(history)
+    },
     async onClickInput(){ 
       this.searchPanelShow = true
     const hots = await getSearchHot()
     this.searchHot = hots.data.result.hots
-    console.log('hots',hots)
     },
     onInput:debounce(function(value){
       if(!value.trim()) return
       console.log(value);
       Search(value).then(res=>{
-        this.suggest = res.data.result
+        this.suggest = res.result
         console.log('suggest',this.suggest);
       })
     },500),
-    onEnterpress(){
+    async onEnterpress(){
       if(this.searchKeyword){
         this.goSearch(this.searchKeyword)
       }
@@ -150,6 +159,8 @@ export default {
           console.log('thispush',this.searchHistorys)
           setStore(SEARCH_HISTORY_KEY,this.searchHistorys)
         }
+        this.$router.push(`/search/${keyword}`)
+        this.searchPanelShow = false
     },
     removeHistorys(){
       removeStore(SEARCH_HISTORY_KEY);
@@ -167,7 +178,25 @@ export default {
       console.log(artist);
     },
     onClickSong(item){
-      console.log(item)
+      console.log('item',item);
+      const {
+        id,
+        name,
+        artists,
+        duration,
+        mvid,
+        album: { id: albumId, name: albumName }
+      } = item
+      const song = createSong({
+        id,
+        name,
+        artists,
+        duration,
+        albumId,
+        albumName,
+        mvId:mvid
+      })
+      this.startSong(song)
     },
     stopblur(){/* 
       this.searchPanelShow = false */

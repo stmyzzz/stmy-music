@@ -8,12 +8,11 @@ function createBaseInstance(){
   const instance = axios.create({
     baseURL: BASE_URL,
   })
-  axios.interceptors.response.use(handleResponse,handleError);
+  instance.interceptors.response.use(handleResponse,handleError);
   return instance
 }
 function handleResponse(response){
   return response.data
-  
 }
 function handleError(e){
   showConfirm(e.message, "出错啦！");

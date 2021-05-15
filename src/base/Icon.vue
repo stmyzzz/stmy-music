@@ -25,7 +25,7 @@ export default {
     getIconClass(){
       let cls = `icon-${this.type}`
       if(this.color){
-        cls += `icon-color-${this.color}`
+        cls += ` icon-color-${this.color}`
       }
       return cls
     },

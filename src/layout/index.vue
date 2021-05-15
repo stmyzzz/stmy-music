@@ -32,7 +32,8 @@ export default {
     }   
     .content{
       flex: 1;
-      overflow-y: auto;
+      overflow-y: auto; 
+      margin-bottom: 70px;
     }  
   }
 

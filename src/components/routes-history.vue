@@ -1,6 +1,6 @@
 <template>
   <div class="routes-history">
-    <Icon class="icon" :backdrop="true" type="back" @click="click()"  >
+    <Icon class="icon" :backdrop="true" type="back" @click="back"  >
     </Icon>
         <Icon
       class="icon"

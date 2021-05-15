@@ -32,7 +32,7 @@ export default {
   methods:{
       async initData(){
       let res = await getCommondPlayList()
-      this.CommondPlayList = res.data.result
+      this.CommondPlayList = res.result
       console.log(this.CommondPlayList)
     },
 

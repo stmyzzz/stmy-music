@@ -21,7 +21,7 @@
 <script>
 import {getNewSong} from '@/api'
 import {createSong} from '@/utils'
-import { mapActions } from "vuex"
+import { mapActions, mapState } from "vuex"
 export default {
   name:'NewSong',                     
   data(){
@@ -34,6 +34,7 @@ export default {
     this.initData()
   },
   computed:{
+    ...mapState(['currentTime']),
     SongList(){
       return [
         this.initSongs.slice(0,this.limitItem),
@@ -48,7 +49,7 @@ export default {
     ...mapActions(["startSong"]),
     async initData(){
       let res = await getNewSong()
-      this.NewSong = res.data.result
+      this.NewSong = res.result
       console.log('newsong',this.NewSong)
     },
     createinitSong(song){
@@ -77,6 +78,7 @@ export default {
       console.log('initSongs',this.initSongs);
       console.log('this.songlist',this.SongList);
       this.startSong(normalSong)
+
     }
   }
 }
@@ -93,6 +95,7 @@ export default {
         margin-bottom: 20px;
         padding: .4rem;
         cursor: pointer;
+        color: var(--font-color);
         &:hover {
           background-color: var(--light-bgcolor);
         }

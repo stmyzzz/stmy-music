@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu" v-show="MenuState">
     <div class="user">
       <User />
     </div>
@@ -31,6 +31,7 @@ import User from '@/components/user'
 import {menuRoutes} from '@/router'
 import {mapGetters} from 'vuex'
 import Icon from '../base/Icon.vue'
+import {mapState} from 'vuex'
 export default {
   data(){
     return {
@@ -39,7 +40,8 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['userMenus'])
+    ...mapGetters(['userMenus']),
+    ...mapState(['MenuState'])
   },
   components:{
     User,

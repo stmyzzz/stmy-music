@@ -27,7 +27,7 @@ export default {
   methods:{
     async initData(){
       let newMv = await getCommondMv()
-      this.mvList = newMv.data.result
+      this.mvList = newMv.result
       console.log('newmv',this.mvList);
     }
   }

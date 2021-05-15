@@ -1,6 +1,8 @@
 <template>
 <div class="title_wrap">
-  <p class="title">{{title}}</p>
+  <p class="title">{{title}}
+    <span v-if="total !== 0" slot="total">({{total}})</span>
+  </p>
 </div>
 </template>
 
@@ -11,6 +13,10 @@ export default {
     title:{
       type:String,
       default:'未填写'
+    },
+    total:{
+      type:Number,
+      default:0
     }
   }
 }

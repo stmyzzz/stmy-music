@@ -1,4 +1,4 @@
-import { getArtists } from "./commen"
+import { getArtists,numDate } from "./commen"
 
 export function createSong(song){ 
     /* 解构 */
@@ -12,7 +12,7 @@ export function createSong(song){
       albumName,
       url:songPlayerUrl(id),
       artistsText:getArtists(artists),
-      durationSecond:duration/1000,
+      durationSecond:numDate(duration/1000),
       albumId,
       mvId,
       ...rest

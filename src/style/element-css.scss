@@ -72,3 +72,27 @@ $input-height : 32px;
 .el-slider__bar{
   height: 4px;
 }
+.el-pagination{
+  text-align: right;
+  .btn-prev,.btn-next{
+    color: #d33a31 !important;
+  }
+  .el-pager{
+    li:not(.disabled).active {
+    background-color: #d33a31 !important;
+    color: #FFF;
+    }
+    li:not(.disabled):hover{
+      color: #d33a31 !important;
+    }
+  }
+}
+
+/* el-table */
+.el-table{
+  margin: auto;
+  font-size: 12px;
+}
+.el-table td, .el-table th.is-leaf{
+  border: none  ;
+}
