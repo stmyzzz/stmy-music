@@ -1,5 +1,5 @@
 <template>
-  <div class="search_container">
+  <div ref="search" class="search_container">
     <el-input 
     @click.native="onClickInput"  suffix-icon="el-icon-search" 
     size="small" 
@@ -69,6 +69,7 @@ export default {
   },
   mounted(){
     this.initData()
+    window.addEventListener('click',this.closeSearch)
   },
   computed:{
     suggestShow(){
@@ -131,7 +132,7 @@ export default {
     async onClickInput(){ 
       this.searchPanelShow = true
     const hots = await getSearchHot()
-    this.searchHot = hots.data.result.hots
+    this.searchHot = hots.result.hots
     },
     onInput:debounce(function(value){
       if(!value.trim()) return
@@ -200,6 +201,9 @@ export default {
     },
     stopblur(){/* 
       this.searchPanelShow = false */
+    },
+    closeSearch(e){
+      if(!this.$refs.search.contains(e.target)) this.searchPanelShow = false
     }
     }
 }

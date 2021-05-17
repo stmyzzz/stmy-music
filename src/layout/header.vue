@@ -44,7 +44,7 @@ export default {
     return {
       isPlayerShow:false
     }
-  }
+  },
 
 }
 </script>

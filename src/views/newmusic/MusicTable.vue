@@ -56,7 +56,7 @@
 
 <script>
 import {getArtists,numDate} from '@/utils'
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState,mapMutations } from "vuex"
 export default {
   props:['TopSongs'],
     computed:{
@@ -64,6 +64,7 @@ export default {
   },
   methods:{
     ...mapActions(["startSong"]),
+    ...mapMutations(["setPlayList","setPlayListShow"]),
     changeartists(row){
       return `${getArtists(row.artists)}`
     },
@@ -74,6 +75,9 @@ export default {
       goSong(row){
       console.log(row,'row');
       this.startSong(row);
+      this.setPlayList(row)
+      this.setPlayListShow(true)
+      console.log('true');
     }
   }
 }

@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {getUserDetail,getUserPlaylist} from '@/api'
-import {setStore,removeStore} from '@/utils'
+import {setStore,removeStore,getStore} from '@/utils'
 Vue.use(Vuex)
 const UID_KEY = '__uid__'
 export default new Vuex.Store({
   state: {
     user:{}, //用户信息
     playLists:[], /* 用户歌单列表 */
+    playlistHistory:JSON.parse(getStore('playlistHistory')) || [], /* 用户播放列表 */
     haslogin:false,/* 登录状态 */
     currentSong:{},/* 当前播放的歌曲 */
     playstate:false,/* 当前播放的状态 */
-    playHistory:[],  /* 播放列表 */
     currentTime:0,  /* 播放的位置 */
-    MenuState:true
+    MenuState:true, 
+    isPlaylistShow:false /* 播放列表显示 */,
+    playMode:getStore('mode') || 'queue'
   },
   mutations: {
     setUser(state,user){
@@ -33,6 +35,35 @@ export default new Vuex.Store({
     },
     setMenuState(state,show){
       state.MenuState = show
+    },
+    /* 设置播放列表 */
+    setPlayList(state,playlist){
+      let checkrepeat = false
+      state.playlistHistory.forEach(song =>{
+        if(song.id == playlist.id){
+          checkrepeat = true
+        }
+      })
+      if(!checkrepeat){
+      state.playlistHistory.push(playlist)
+      setStore('playlistHistory',state.playlistHistory)
+      }
+    },
+    setPlayMode(state,mode){
+      state.playMode = mode
+      setStore('mode',mode)
+    },
+    setPlayListShow(state,show){
+      state.isPlaylistShow = show
+    },
+    delPlayList(state,index){
+      state.playlistHistory.splice(index,1)
+      setStore('playlistHistory',state.playlistHistory)
+      console.log('currentosng', state.currentSong);
+    },
+    clearPlayList(state){
+      state.playlistHistory = []
+      removeStore('playlistHistory')
     }
   },
   actions: {
@@ -62,7 +93,6 @@ export default new Vuex.Store({
     async startSong({commit},song){
       commit('setCurrentSong',song)
       commit('setPlayState',true)
-
     }
   },
   getters:{

@@ -64,7 +64,7 @@ export default {
     flex-direction: column;
     width: 250px;
     background-color: var(--menu-bgcolor);
-    height: 100%;
+    margin-bottom: $mini-player-height;
     .menu_wrap{
     flex: 1;
     overflow: hidden;

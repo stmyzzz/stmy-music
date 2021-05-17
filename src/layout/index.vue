@@ -33,7 +33,7 @@ export default {
     .content{
       flex: 1;
       overflow-y: auto; 
-      margin-bottom: 70px;
+      margin-bottom: $mini-player-height;
     }  
   }
 
