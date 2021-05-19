@@ -1,7 +1,7 @@
 <template>
   <div class="play-list-card">
     <div class="list">
-      <div class="list_item" v-for="(list,index) in playlist" :key="index">
+      <div @click="goplaylist(list.id)" class="list_item" v-for="(list,index) in playlist" :key="index">
         <div class="img_wrap">
           <img :src="list.coverImgUrl" alt="">            
         </div>
@@ -17,6 +17,11 @@ export default {
     playlist:{
       type:Array,
       default:() => []      
+    }
+  },
+  methods:{
+    goplaylist(playlistId){
+      this.$router.push(`/playlist/${playlistId}`)
     }
   }
 

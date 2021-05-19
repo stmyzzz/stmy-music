@@ -103,10 +103,6 @@ export default {
     async getPlaylistComment(){
       let res = await getPlaylistComment(this.getParams)
       console.log('resc',res);
-      /* let res2 = await getPlaylistComment({
-        id:this.id
-      })
-      console.log('resc',res2); */
     },
     handleClick(tab) {
       console.log(tab.index);

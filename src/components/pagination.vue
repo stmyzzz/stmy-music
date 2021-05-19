@@ -59,6 +59,15 @@ export default {
 
       this.$emit('getListData',res)
     }
+  },
+  watch:{
+    getParams:{
+      deep:true,
+      handler(){
+        this.currentPage = 1
+        this.onPageChange(this.currentPage)
+      }
+    }
   }
 
 }

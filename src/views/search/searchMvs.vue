@@ -28,12 +28,8 @@ export default {
   },
   created(){
     this.SearchDetail = SearchDetail
-    this.initData()
   },
   methods:{
-    async initData(){ 
-      this.getSearchMv()  
-    },
   getSearchMv(res){
       console.log('resss12',res);
       const {result:{mvs,mvCount}} = res

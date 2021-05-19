@@ -1,11 +1,21 @@
 <template>
   <div  class="player" ref="player">
+    <div class="img-wrap" @click="hasPlayer" >
+      <img :src="currentSong.img" alt="">
+    </div>
+    <player-panel :currentTime="currentTime"   :drawer.sync="drawer" ></player-panel>
+    <div class="song-wrap">
+      <span>{{currentSong.name}} - </span>
+      <span>{{currentSong.artistsText}}</span>
+    </div>
     <audio ref="audio" class="audio" controls="controls" @play="onplay" 
+    @pause="onpause"
     @ended="PlayEnd" autoplay="autoplay"
-        :src="currentSong.url">
+        :src="currentSong.url"
+        @timeupdate="updateTime">
     </audio>
-    <span>上一首歌</span>
-    <span>下一首歌</span>
+    <span @click="preSong">上一首歌</span>
+    <span @click="nextSong" >下一首歌</span>
     <span  
     @onended="PlayEnd"
     @click="hasDrawer">播放列表</span>
@@ -25,6 +35,7 @@
 import {mapState,mapMutations} from 'vuex'
 import {getStore} from '@/utils'
 import nowPlaylist from '@/components/nowplaylist'
+import PlayerPanel from '@/components/playerpanel'
 const playModeMap = {
   queue:{
     code:'queue',
@@ -47,13 +58,14 @@ export default {
   data(){
     return {
       Time:0,
-      isDrawer:false,
+      drawer:false,
       currentMode:{},
-      playMode:getStore('mode') || 'loop',
+      playMode:getStore('mode') || 'loop'
     }
   },
   components:{
-    nowPlaylist
+    nowPlaylist,
+    PlayerPanel
   },
   created(){
     this.currentMode = playModeMap[this.playMode]
@@ -94,7 +106,35 @@ export default {
         this.setCurrentSong(this.playlistHistory[this.RandomSong]) 
       }
     },
-    ...mapMutations(['setCurrentTime','setPlayMode','setPlayListShow','setCurrentSong']),
+    preSong(){
+      console.log('dangqian',this.currentSong);
+      this.CurrentIndex = this.playlistHistory.findIndex((value) =>{
+        console.log('当前歌曲的索引',value.id);
+        return value.id == this.currentSong.id
+      })
+      console.log('当前歌曲的索引',this.CurrentIndex);
+      if(this.CurrentIndex == 0){
+        this.preIndex = this.playlistHistory.length - 1
+      }else{
+        this.preIndex = this.CurrentIndex - 1       
+      }
+      this.setCurrentSong(this.playlistHistory[this.preIndex])
+    },
+    nextSong(){
+      console.log('dangqian',this.currentSong);
+      this.CurrentIndex = this.playlistHistory.findIndex((value) =>{
+        console.log('当前歌曲的索引',value.id);
+        return value.id == this.currentSong.id
+      })
+      console.log('当前歌曲的索引',this.CurrentIndex);
+      if(this.CurrentIndex ==  this.playlistHistory.length - 1  ){
+        this.nextIndex =0
+      }else{
+        this.nextIndex = this.CurrentIndex + 1       
+      }
+      this.setCurrentSong(this.playlistHistory[this.nextIndex])
+    },
+    ...mapMutations(['setCurrentTime','setPlayMode','setPlayListShow','setCurrentSong','setPlayState']),
     otherClose(e){
       console.log('this.$refs.player',this.$refs.player.contains(e.target));
       if(!this.$refs.player.contains(e.target)) this.setPlayListShow(false)
@@ -102,15 +142,22 @@ export default {
     updateTime(e){
       const time = e.target.currentTime
       this.setCurrentTime(time)
+      
     },
     changeTimee(time){
       console.log('time',time);
     },
     onplay(){
-      console.log('play');
+      this.setPlayState(true)
+    },
+    onpause(){
+      this.setPlayState(false)
     },
     hasDrawer(){
       this.setPlayListShow(!this.isPlaylistShow)
+    },
+    hasPlayer(){
+      this.drawer = !this.drawer
     },
     changeMode(){
       if(this.playMode == 'loop'){
@@ -126,7 +173,9 @@ export default {
       console.log(this.playMode);
       this.currentMode = playModeMap[this.playMode]
       this.setPlayMode(this.playMode)
-    }
+    },
+  },
+  watch:{
   }
 
 
@@ -141,6 +190,21 @@ export default {
     right:0;
     background:var(--body-bgcolor);
     z-index: 100;
+    padding: 0px 100px;
+    display: flex;
+    align-items: center;
+    .img-wrap{
+      width: 45px;
+      height: 45px;
+      img{
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+      }
+    }
+    .song-wrap{
+      margin-left: 20px;
+    }
     .audio{
       width:50%;
     }
@@ -162,6 +226,10 @@ export default {
           border-radius: 5px;
         }
       }
+     
+      ::-webkit-scrollbar {
+            width: 0px;
+        }
       .content{
         display: flex;
         flex-direction: column;
@@ -182,7 +250,6 @@ export default {
     .mode{
       flex: 5;
     }   
-    
     }
   }
 </style>

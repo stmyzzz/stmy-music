@@ -12,7 +12,6 @@
       </ul>   
       <div class="user_Menu" v-for="(item,index) in userMenus" :key="index"> 
         <p>
-          <!-- <Icon :size="16" :type="item.type" /> -->
           <span class="usermenu_header">{{item.title}}</span>
         </p>
         <ul class="menu_list">

@@ -6,7 +6,9 @@
   <div class="typeTabs">
     <search-tab :tabs="tabs" @tabChange="tabChange" ></search-tab>
   </div>
+  <transition name="el-fade-in-linear">
   <router-view></router-view>
+  </transition>
 </div>
 </template>
 
@@ -58,6 +60,9 @@ export default {
     onUpdateCount(count){
       this.count = count
     }
+  },
+  watch:{
+    
   }
 }
 </script>

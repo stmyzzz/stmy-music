@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {getUserDetail,getUserPlaylist} from '@/api'
-import {setStore,removeStore,getStore} from '@/utils'
+import {setStore,removeStore,getStore,getImgUrl} from '@/utils'
 Vue.use(Vuex)
 const UID_KEY = '__uid__'
 export default new Vuex.Store({
@@ -91,6 +91,16 @@ export default new Vuex.Store({
       removeStore(UID_KEY)
     },
     async startSong({commit},song){
+      if(!song.img){
+        console.log('action1');
+        console.log('song.img',song.albumId);
+        if(typeof song.albumId == 'number'){
+          console.log('action2');
+          song.img = await getImgUrl(song.id,song.albumId)
+          
+        }
+      }
+      console.log('song',song);
       commit('setCurrentSong',song)
       commit('setPlayState',true)
     }

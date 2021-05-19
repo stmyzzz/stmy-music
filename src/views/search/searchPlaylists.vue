@@ -26,15 +26,11 @@ export default {
   },
   created(){
     this.SearchDetail = SearchDetail
-    this.initData()
   },
   methods:{
-    async initData(){ 
-      this.getSearchMv()  
-    },
   getSearchMv(res){
       console.log('resss12',res);
-      const {result:{playlists,playlistCount}} = res
+      const {playlists,playlistCount} = res.result
     this.playlists = playlists
     this.playlistCount = playlistCount
     this.searchData.onUpdateCount(playlistCount)

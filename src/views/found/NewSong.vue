@@ -21,7 +21,7 @@
 <script>
 import {getNewSong} from '@/api'
 import {createSong} from '@/utils'
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState,mapMutations } from "vuex"
 export default {
   name:'NewSong',                     
   data(){
@@ -47,6 +47,7 @@ export default {
   },
   methods:{
     ...mapActions(["startSong"]),
+    ...mapMutations(["setPlayList","setPlayListShow"]),
     async initData(){
       let res = await getNewSong()
       this.NewSong = res.result
@@ -74,11 +75,9 @@ export default {
     },
     onClickSong(index){
       const normalSong = this.initSongs[index]
-      console.log('noramlSong',normalSong);
-      console.log('initSongs',this.initSongs);
-      console.log('this.songlist',this.SongList);
       this.startSong(normalSong)
-
+      this.setPlayList(normalSong)
+      this.setPlayListShow(true)
     }
   }
 }

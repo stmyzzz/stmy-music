@@ -96,3 +96,23 @@ $input-height : 32px;
 .el-table td, .el-table th.is-leaf{
   border: none  ;
 }
+
+
+/* 标签栏 */
+.el-tabs__active-bar{
+  background-color: #d33a31 !important;
+}
+.el-tabs__item:hover{
+  color: #d33a31 !important;
+}
+.el-tabs__item.is-active{
+  color: #d33a31 !important;
+}
+.el-drawer{
+  height: 100% !important;
+  overflow-y: scroll;
+}
+.el-drawer__wrapper{
+
+  bottom: $mini-player-height !important;
+}

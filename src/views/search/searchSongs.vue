@@ -55,7 +55,7 @@
 import {SearchDetail} from '@/api'
 import {createSong} from '@/utils'
 import Pagination from '@/components/pagination'
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState ,mapMutations } from "vuex"
 export default {
   components: { Pagination },
   inject:['searchData'],
@@ -68,18 +68,18 @@ export default {
   },
   created(){
     this.SearchDetail = SearchDetail
-    this.initData()
   },
   methods:{
     ...mapActions(["startSong"]),
-    async initData(){ 
-      this.getSearchSong()  
-    },
-          goSong(row){
+    ...mapMutations(["setPlayList","setPlayListShow"]),
+      goSong(row){
       console.log(row,'rowduration');
       this.startSong(row);
+      this.setPlayList(row)
+      this.setPlayListShow(true)
     },
   getSearchSong(res){
+      console.log('this.searchData',this.searchData);
       console.log('resss12',res);
       const {result:{songs,songCount}} = res
       this.songs = songs.map(song =>{
@@ -104,9 +104,13 @@ export default {
   computed:{
     getParams(){
       return {
-        keywords:this.searchData.keyword,
+        keywords:this.keyword,
         type:1,
       }
+    },
+    keyword(){
+      return this.searchData.keyword
+
     },
     ...mapState(['currentTime']),
   }
