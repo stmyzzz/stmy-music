@@ -1,6 +1,6 @@
 # stmymusic
 
-## Project setup
+## 如何使用这个项目
 ```
 npm install
 ```
